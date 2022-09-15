@@ -10,11 +10,16 @@ import UIKit
 @main
 class AppDelegate: UIResponder, UIApplicationDelegate {
 
+    private func configureUserNotifications() {
+      UNUserNotificationCenter.current().delegate = self
+    }
 
 
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
         // Override point for customization after application launch.
+        configureUserNotifications()
         return true
+       
     }
 
     // MARK: UISceneSession Lifecycle
@@ -34,3 +39,12 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 
 }
 
+extension AppDelegate: UNUserNotificationCenterDelegate {
+  func userNotificationCenter(
+    _ center: UNUserNotificationCenter,
+    willPresent notification: UNNotification,
+    withCompletionHandler completionHandler: (UNNotificationPresentationOptions) -> Void
+  ) {
+    completionHandler(.banner)
+  }
+}
